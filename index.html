@@ -453,7 +453,7 @@
       <div class="dot"></div>
       FroggieMC
     </div>
-    <div class="nav-badge">🌿 Now Online</div>
+    <div class="nav-badge" id="server-status">⏳ Pinging pond...</div>
   </nav>
 
   <section class="hero">
@@ -594,3 +594,48 @@
 </script>
 </body>
 </html>
+
+<script>
+  // The IP and port you want to check
+  // You can use 'play.froggiemc.eu' or '5.9.109.240:31333'
+  const serverIP = '5.9.109.240:31333'; 
+  
+  // We use the free mcsrvstat.us API
+  const apiURL = `https://api.mcsrvstat.us/3/${serverIP}`;
+
+  async function checkServerStatus() {
+    const statusBadge = document.getElementById('server-status');
+    
+    try {
+      const response = await fetch(apiURL);
+      const data = await response.json();
+
+      if (data.online) {
+        // If the server is online, show the player count
+        const currentPlayers = data.players.online;
+        const maxPlayers = data.players.max;
+        
+        statusBadge.innerHTML = `🌿 ${currentPlayers}/${maxPlayers} Online`;
+        statusBadge.style.color = 'var(--green-primary)';
+        statusBadge.style.background = 'rgba(74, 222, 128, 0.1)';
+        statusBadge.style.borderColor = 'var(--border-soft)';
+      } else {
+        // If the server is offline
+        statusBadge.innerHTML = `🔴 Offline`;
+        statusBadge.style.color = '#ef4444'; // Red color
+        statusBadge.style.background = 'rgba(239, 68, 68, 0.1)';
+        statusBadge.style.borderColor = 'rgba(239, 68, 68, 0.2)';
+      }
+    } catch (error) {
+      // If the API fails to load
+      statusBadge.innerHTML = `🐸 Status Unknown`;
+      console.error('Error fetching server status:', error);
+    }
+  }
+
+  // Run the check when the page loads
+  checkServerStatus();
+  
+  // Optional: Refresh the status every 60 seconds (60000 milliseconds)
+  setInterval(checkServerStatus, 60000);
+</script>
