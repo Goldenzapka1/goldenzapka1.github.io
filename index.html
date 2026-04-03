@@ -1,530 +1,596 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type=image/png" href="/favicon.png">
+  <link rel="icon" type="image/png" href="/favicon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FroggieMC — Chill Survival</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Outfit:wght@400;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --green-dark: #1a3a1a;
-      --green-mid: #2d6a2d;
-      --green-bright: #4caf50;
-      --green-light: #a8e6a3;
-      --green-pale: #d4f5d0;
-      --lily: #6dbf67;
-      --pond: #3a8c8c;
-      --pond-light: #7ecece;
-      --gold: #f5c842;
-      --cream: #f9f7ef;
-      --text-dark: #1c2a1c;
-      --text-mid: #3a5a3a;
+      /* Soft, deep forest dark mode - easy on eyes but colorful */
+      --bg: #091510;
+      --surface: #102118;
+      --surface-hover: #162e22;
+      
+      /* Happy, vibrant accents */
+      --green-primary: #4ade80;
+      --green-bright: #86efac;
+      --teal-accent: #2dd4bf;
+      
+      --border-soft: rgba(74, 222, 128, 0.15);
+      --glow-primary: rgba(74, 222, 128, 0.25);
+      
+      --text-main: #f0fdf4;
+      --text-muted: #a7f3d0;
+      --text-faint: rgba(167, 243, 208, 0.6);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
-      background-color: #0f2410;
+      background: var(--bg);
       font-family: 'Nunito', sans-serif;
-      color: var(--cream);
+      color: var(--text-main);
       min-height: 100vh;
       overflow-x: hidden;
+      line-height: 1.6;
     }
 
-    /* === ANIMATED BACKGROUND === */
-    .bg-layer {
+    /* SOFTER NOISE */
+    body::before {
+      content: '';
       position: fixed;
       inset: 0;
-      z-index: 0;
-      background:
-        radial-gradient(ellipse at 20% 80%, rgba(61, 139, 61, 0.18) 0%, transparent 55%),
-        radial-gradient(ellipse at 80% 20%, rgba(58, 140, 140, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(15, 48, 15, 1) 0%, #0a1a0a 100%);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.015;
+      pointer-events: none;
+      z-index: 9999;
     }
 
-    /* Floating lily pads */
-    .lily-pad {
+    /* BRIGHTER, HAPPIER BLOBS */
+    .blob {
       position: fixed;
       border-radius: 50%;
-      opacity: 0.07;
-      animation: floatPad linear infinite;
+      filter: blur(140px);
       pointer-events: none;
       z-index: 0;
+      opacity: 0.6;
     }
-    .lily-pad:nth-child(1) { width: 180px; height: 180px; background: var(--green-bright); left: -5%; top: 60%; animation-duration: 22s; animation-delay: 0s; }
-    .lily-pad:nth-child(2) { width: 120px; height: 120px; background: var(--pond); right: -3%; top: 30%; animation-duration: 18s; animation-delay: -6s; }
-    .lily-pad:nth-child(3) { width: 240px; height: 240px; background: var(--green-mid); left: 70%; top: 70%; animation-duration: 28s; animation-delay: -12s; }
-    .lily-pad:nth-child(4) { width: 80px; height: 80px; background: var(--lily); left: 40%; top: 10%; animation-duration: 14s; animation-delay: -4s; }
-
-    @keyframes floatPad {
-      0%   { transform: translateY(0px) scale(1) rotate(0deg); }
-      33%  { transform: translateY(-30px) scale(1.03) rotate(5deg); }
-      66%  { transform: translateY(15px) scale(0.97) rotate(-3deg); }
-      100% { transform: translateY(0px) scale(1) rotate(0deg); }
+    .blob-1 {
+      width: 60vw; height: 60vw;
+      max-width: 600px; max-height: 600px;
+      background: radial-gradient(circle, rgba(74,222,128,0.15) 0%, transparent 70%);
+      top: -10%; left: -10%;
+      animation: blobDrift 22s ease-in-out infinite alternate;
     }
-
-    /* Ripple circles */
-    .ripple {
-      position: fixed;
-      border-radius: 50%;
-      border: 1px solid rgba(78, 200, 160, 0.08);
-      animation: rippleOut 8s ease-out infinite;
-      pointer-events: none;
-      z-index: 0;
+    .blob-2 {
+      width: 50vw; height: 50vw;
+      max-width: 500px; max-height: 500px;
+      background: radial-gradient(circle, rgba(45,212,191,0.12) 0%, transparent 70%);
+      bottom: -10%; right: -10%;
+      animation: blobDrift 28s ease-in-out infinite alternate-reverse;
     }
-    .ripple:nth-child(5)  { width: 300px; height: 300px; left: 10%; top: 50%; animation-delay: 0s; }
-    .ripple:nth-child(6)  { width: 500px; height: 500px; left: 10%; top: 50%; animation-delay: -2s; }
-    .ripple:nth-child(7)  { width: 700px; height: 700px; left: 10%; top: 50%; animation-delay: -4s; }
-    .ripple:nth-child(8)  { width: 300px; height: 300px; right: 5%; top: 20%; animation-delay: -3s; }
-    .ripple:nth-child(9)  { width: 500px; height: 500px; right: 5%; top: 20%; animation-delay: -5s; }
-
-    @keyframes rippleOut {
-      0%   { opacity: 0.5; transform: scale(0.5) translate(-50%, -50%); }
-      100% { opacity: 0; transform: scale(1.2) translate(-50%, -50%); }
+    @keyframes blobDrift {
+      0%   { transform: translate(0,0) scale(1); }
+      100% { transform: translate(50px,80px) scale(1.15); }
     }
 
-    /* === MAIN LAYOUT === */
-    .container {
+    /* LAYOUT */
+    .wrap {
       position: relative;
       z-index: 1;
-      max-width: 860px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 60px 24px 80px;
+      padding: 0 24px 80px;
     }
 
-    /* === HERO === */
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 0 0;
+      margin-bottom: 80px;
+      animation: fadeDown 0.8s ease both;
+    }
+    .nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-logo .dot {
+      width: 10px; height: 10px;
+      background: var(--green-primary);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--green-primary);
+      animation: dotPulse 2.5s ease-in-out infinite;
+    }
+    .nav-badge {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--green-primary);
+      background: rgba(74, 222, 128, 0.1);
+      border: 1px solid var(--border-soft);
+      padding: 6px 16px;
+      border-radius: 100px;
+      backdrop-filter: blur(8px);
+    }
+
+    /* HERO */
     .hero {
       text-align: center;
-      margin-bottom: 56px;
-      animation: fadeSlideUp 0.9s cubic-bezier(.22,.68,0,1.2) both;
+      margin-bottom: 100px;
     }
-
-    .frog-icon {
-      font-size: 96px;
-      line-height: 1;
-      display: block;
-      margin-bottom: 12px;
-      filter: drop-shadow(0 0 32px rgba(76, 175, 80, 0.5));
-      animation: frogBounce 2.4s ease-in-out infinite;
-    }
-
-    @keyframes frogBounce {
-      0%, 100% { transform: translateY(0) scale(1); }
-      45%       { transform: translateY(-14px) scale(1.04); }
-      60%       { transform: translateY(-10px) scale(1.02); }
-    }
-
-    h1 {
-      font-family: 'Fredoka One', cursive;
-      font-size: clamp(3rem, 9vw, 5.5rem);
-      line-height: 1;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, #7edd6a 0%, #4caf50 40%, #a8e86a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      filter: drop-shadow(0 2px 24px rgba(76,175,80,0.3));
-      margin-bottom: 4px;
-    }
-
-    .tagline {
-      font-size: 1.15rem;
-      color: var(--green-light);
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      margin-bottom: 28px;
-    }
-
-    .hero-desc {
-      font-size: 1.05rem;
-      color: rgba(212, 245, 208, 0.75);
-      max-width: 480px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
-
-    /* === WAVE DIVIDER === */
-    .wave {
-      width: 100%;
-      height: 40px;
-      margin-bottom: 40px;
-      opacity: 0.15;
-    }
-
-    /* === FEATURES GRID === */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 16px;
-      margin-bottom: 52px;
-    }
-
-    .feature-card {
-      background: linear-gradient(135deg, rgba(45, 106, 45, 0.22) 0%, rgba(26, 58, 26, 0.35) 100%);
-      border: 1px solid rgba(76, 175, 80, 0.2);
-      border-radius: 18px;
-      padding: 22px 20px;
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-      animation: fadeSlideUp 0.7s cubic-bezier(.22,.68,0,1.2) both;
-      backdrop-filter: blur(6px);
-    }
-
-    .feature-card:nth-child(1) { animation-delay: 0.1s; }
-    .feature-card:nth-child(2) { animation-delay: 0.15s; }
-    .feature-card:nth-child(3) { animation-delay: 0.2s; }
-    .feature-card:nth-child(4) { animation-delay: 0.25s; }
-    .feature-card:nth-child(5) { animation-delay: 0.3s; }
-    .feature-card:nth-child(6) { animation-delay: 0.35s; }
-    .feature-card:nth-child(7) { animation-delay: 0.4s; }
-    .feature-card:nth-child(8) { animation-delay: 0.45s; }
-    .feature-card:nth-child(9) { animation-delay: 0.5s; }
-
-    .feature-card:hover {
-      transform: translateY(-4px) scale(1.01);
-      border-color: rgba(76, 175, 80, 0.5);
-      box-shadow: 0 8px 36px rgba(76, 175, 80, 0.15);
-    }
-
-    .feat-emoji {
-      font-size: 2rem;
-      line-height: 1;
-      flex-shrink: 0;
-      filter: drop-shadow(0 2px 8px rgba(76,175,80,0.25));
-    }
-
-    .feat-text strong {
-      display: block;
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--green-light);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 3px;
-    }
-
-    .feat-text p {
-      font-size: 0.9rem;
-      color: rgba(212, 245, 208, 0.7);
-      line-height: 1.5;
-    }
-
-    /* === CONNECTION SECTION === */
-    .connect-section {
-      background: linear-gradient(135deg, rgba(58, 140, 140, 0.15) 0%, rgba(45, 106, 45, 0.25) 100%);
-      border: 1px solid rgba(126, 206, 206, 0.2);
-      border-radius: 24px;
-      padding: 36px 32px;
-      margin-bottom: 36px;
-      animation: fadeSlideUp 0.7s 0.55s cubic-bezier(.22,.68,0,1.2) both;
-    }
-
-    .connect-section h2 {
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.8rem;
-      color: var(--pond-light);
-      margin-bottom: 24px;
-      text-align: center;
-      letter-spacing: 0.5px;
-    }
-
-    .connect-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 14px;
-    }
-
-    .connect-card {
-      background: rgba(0,0,0,0.25);
-      border: 1px solid rgba(126, 206, 206, 0.15);
-      border-radius: 14px;
-      padding: 16px 18px;
-    }
-
-    .connect-label {
-      font-size: 0.75rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: var(--pond-light);
-      margin-bottom: 6px;
-      opacity: 0.8;
-    }
-
-    .connect-value {
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.05rem;
-      color: var(--cream);
-      letter-spacing: 0.3px;
-      word-break: break-all;
-    }
-
-    .connect-sub {
-      font-size: 0.78rem;
-      color: rgba(212, 245, 208, 0.5);
-      margin-top: 3px;
-    }
-
-    /* === CTA BUTTON === */
-    .cta-wrap {
-      text-align: center;
-      animation: fadeSlideUp 0.7s 0.65s cubic-bezier(.22,.68,0,1.2) both;
-    }
-
-    .cta-btn {
+    .hero-eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #4caf50, #2e7d32);
-      color: #fff;
-      font-family: 'Fredoka One', cursive;
-      font-size: 1.25rem;
-      letter-spacing: 0.5px;
-      text-decoration: none;
-      padding: 16px 38px;
-      border-radius: 50px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 4px 28px rgba(76, 175, 80, 0.4), 0 0 0 0 rgba(76,175,80,0.4);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      animation: pulse 2.5s ease-in-out infinite;
-    }
-
-    .cta-btn:hover {
-      transform: scale(1.05) translateY(-2px);
-      box-shadow: 0 8px 40px rgba(76, 175, 80, 0.55);
-      animation: none;
-    }
-
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 4px 28px rgba(76,175,80,0.4), 0 0 0 0 rgba(76,175,80,0.3); }
-      50%       { box-shadow: 0 4px 28px rgba(76,175,80,0.4), 0 0 0 12px rgba(76,175,80,0); }
-    }
-
-    .cta-note {
-      margin-top: 14px;
+      gap: 12px;
       font-size: 0.85rem;
-      color: rgba(212, 245, 208, 0.45);
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--teal-accent);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.1s ease forwards;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: '';
+      height: 2px;
+      width: 40px;
+      background: var(--teal-accent);
+      opacity: 0.5;
+      border-radius: 2px;
+    }
+    .frog {
+      font-size: 88px;
+      display: block;
+      margin: 0 auto 16px;
+      line-height: 1;
+      filter: drop-shadow(0 10px 20px rgba(74,222,128,0.3));
+      opacity: 0;
+      animation: frogIn 0.8s 0.2s cubic-bezier(0.34,1.56,0.64,1) forwards,
+                 frogBop 3s 1s ease-in-out infinite;
+    }
+    @keyframes frogIn {
+      0%   { opacity:0; transform: scale(0.4) translateY(30px); }
+      100% { opacity:1; transform: scale(1) translateY(0); }
+    }
+    @keyframes frogBop {
+      0%,100% { transform: translateY(0) scale(1); }
+      50%     { transform: translateY(-15px) scale(1.05); }
+    }
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3.5rem, 12vw, 6.5rem);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s ease forwards;
+    }
+    h1 .gradient-text {
+      background: linear-gradient(135deg, var(--green-primary), var(--teal-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    h1 .line2 {
+      display: block;
+      font-weight: 800;
+      font-size: 0.45em;
+      letter-spacing: -1px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+    .hero-desc {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-faint);
+      max-width: 500px;
+      margin: 0 auto 40px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s ease forwards;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--green-primary), #22c55e);
+      color: #062112;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      text-decoration: none;
+      padding: 18px 40px;
+      border-radius: 100px;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      box-shadow: 0 10px 30px rgba(74,222,128,0.3);
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s ease forwards;
+    }
+    .hero-cta:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(74,222,128,0.5);
+      background: linear-gradient(135deg, var(--green-bright), var(--green-primary));
+    }
+    .hero-cta svg { width:20px; height:20px; transition: transform 0.3s ease; }
+    .hero-cta:hover svg { transform: translateX(4px); }
+
+    /* DIVIDER */
+    .divider {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--border-soft), transparent);
+      margin: 0 0 80px;
+      border-radius: 100%;
     }
 
-    /* === FOOTER === */
+    /* SECTION LABEL */
+    .section-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::before {
+      content: '✨';
+      font-size: 1.2rem;
+    }
+
+    /* MODERN FEATURES GRID */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 100px;
+    }
+    .feat {
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 24px;
+      padding: 30px 24px;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .feat::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.03), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .feat:hover::before { opacity: 1; }
+    .feat:hover { 
+      background: var(--surface-hover); 
+      transform: translateY(-5px);
+      border-color: rgba(74, 222, 128, 0.4);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2), 0 0 20px rgba(74,222,128,0.05);
+    }
+    .feat-icon { 
+      font-size: 2rem; 
+      line-height: 1; 
+      background: rgba(74, 222, 128, 0.1);
+      width: 50px; height: 50px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 14px;
+      margin-bottom: 4px;
+    }
+    .feat-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--green-bright);
+    }
+    .feat-desc {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-faint);
+    }
+
+    /* CONNECT CARDS */
+    .connect-section { margin-bottom: 80px; }
+    .connect-section .section-label::before { content: '🎮'; }
+    .connect-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .connect-card {
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 24px;
+      padding: 32px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .connect-card:hover { 
+      border-color: var(--green-primary); 
+      transform: translateY(-3px); 
+      box-shadow: 0 10px 30px rgba(74, 222, 128, 0.1);
+    }
+    .connect-card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .connect-icon {
+      width: 48px; height: 48px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(74, 222, 128, 0.2), rgba(45, 212, 191, 0.2));
+      border: 1px solid var(--border-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+    .connect-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--text-main);
+    }
+    .connect-row { 
+      margin-bottom: 16px; 
+      background: rgba(0,0,0,0.2);
+      padding: 12px 16px;
+      border-radius: 12px;
+    }
+    .connect-row:last-child { margin-bottom: 0; }
+    .connect-row-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--teal-accent);
+      margin-bottom: 8px;
+    }
+    .connect-row-value {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .connect-val {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-main);
+      word-break: break-all;
+    }
+    .connect-val a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .connect-val a:hover { color: var(--green-primary); }
+    .copy-btn {
+      flex-shrink: 0;
+      background: var(--green-primary);
+      border: none;
+      color: #062112;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(74, 222, 128, 0.2);
+    }
+    .copy-btn:hover { 
+      background: var(--green-bright); 
+      transform: translateY(-1px);
+    }
+    .copy-btn.copied { 
+      background: var(--teal-accent); 
+      color: #041d18;
+    }
+
+    /* FOOTER */
     footer {
-      text-align: center;
-      margin-top: 60px;
-      padding-top: 28px;
-      border-top: 1px solid rgba(76, 175, 80, 0.1);
-      font-size: 0.82rem;
-      color: rgba(212, 245, 208, 0.3);
-      animation: fadeSlideUp 0.7s 0.75s cubic-bezier(.22,.68,0,1.2) both;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 0;
+      border-top: 2px solid var(--border-soft);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-faint);
+      gap: 16px;
     }
+    footer span { display: flex; align-items: center; gap: 10px; }
+    .footer-dot { width: 8px; height: 8px; background: var(--green-primary); border-radius: 50%; opacity: 0.8; }
 
-    footer .frog-small { font-size: 1.1rem; }
-
-    /* === KEYFRAMES === */
-    @keyframes fadeSlideUp {
-      0%   { opacity: 0; transform: translateY(28px); }
+    /* KEYFRAMES */
+    @keyframes fadeUp {
+      0%   { opacity: 0; transform: translateY(30px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-
-    /* === COPY BUTTON === */
-    .copy-btn {
-      background: rgba(76,175,80,0.12);
-      border: 1px solid rgba(76,175,80,0.25);
-      color: var(--green-light);
-      font-size: 0.7rem;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-left: 8px;
-      vertical-align: middle;
-      transition: background 0.2s;
+    @keyframes fadeDown {
+      0%   { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
-    .copy-btn:hover { background: rgba(76,175,80,0.25); }
-    .copy-btn.copied { color: var(--gold); border-color: var(--gold); }
+    @keyframes dotPulse {
+      0%,100% { box-shadow: 0 0 10px var(--green-primary); }
+      50%     { box-shadow: 0 0 20px var(--green-bright), 0 0 30px rgba(74,222,128,0.4); }
+    }
 
-    /* scroll reveal utility */
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* SCROLL REVEAL */
+    .sr { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+    .sr.visible { opacity: 1; transform: none; }
+    .sr-d1 { transition-delay: 0.1s; }
+    .sr-d2 { transition-delay: 0.2s; }
   </style>
 </head>
 <body>
 
-  <!-- Background decoration -->
-  <div class="bg-layer"></div>
-  <div class="lily-pad"></div>
-  <div class="lily-pad"></div>
-  <div class="lily-pad"></div>
-  <div class="lily-pad"></div>
-  <div class="ripple"></div>
-  <div class="ripple"></div>
-  <div class="ripple"></div>
-  <div class="ripple"></div>
-  <div class="ripple"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
 
-  <div class="container">
+<div class="wrap">
 
-    <!-- HERO -->
-    <div class="hero">
-      <span class="frog-icon">🐸</span>
-      <h1>FroggieMC</h1>
-      <p class="tagline">A Chill Survival Experience 🌿</p>
-      <p class="hero-desc">Looking for a friendly, drama-free Minecraft server? You've found your pond. No grind, no griefers — just vibes.</p>
+  <nav>
+    <div class="nav-logo">
+      <div class="dot"></div>
+      FroggieMC
     </div>
+    <div class="nav-badge">🌿 Now Online</div>
+  </nav>
 
-    <!-- FEATURES -->
+  <section class="hero">
+    <div class="hero-eyebrow">Java &amp; Bedrock Crossplay</div>
+    <span class="frog">🐸</span>
+    <h1>
+      <span class="gradient-text">Froggie</span>MC
+      <span class="line2">your happy pond awaits.</span>
+    </h1>
+    <p class="hero-desc">A friendly, drama-free Minecraft server. Build, explore, and relax — just pure survival vibes.</p>
+    <a href="https://discord.gg/yRpdeJhGhR" target="_blank" class="hero-cta">
+      Join the Pond
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 8h10M9 4l4 4-4 4"/>
+      </svg>
+    </a>
+  </section>
+
+  <div class="divider sr"></div>
+
+  <div class="sr sr-d1">
+    <h2 class="section-label">Server Features</h2>
     <div class="features">
-
-      <div class="feature-card">
-        <span class="feat-emoji">✅</span>
-        <div class="feat-text">
-          <strong>Pure Survival</strong>
-          <p>No /shop, no /ah — just good old-fashioned survival the way it was meant to be.</p>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <span class="feat-emoji">⚔️</span>
-        <div class="feat-text">
-          <strong>PvP Disabled</strong>
-          <p>Build in total peace. No griefers ruining your day, ever.</p>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <span class="feat-emoji">💀</span>
-        <div class="feat-text">
-          <strong>Keep Inventory ON</strong>
-          <p>Die without losing a single item. Your loot is always safe.</p>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <span class="feat-emoji">🐾</span>
-        <div class="feat-text">
-          <strong>Mob Griefing OFF</strong>
-          <p>No creeper craters. No endermen stealing your blocks. Your world stays yours.</p>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <span class="feat-emoji">💬</span>
-        <div class="feat-text">
-          <strong>Discord ↔ Chat</strong>
-          <p>Minecraft chat is linked to Discord. Stay connected wherever you are.</p>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <span class="feat-emoji">🗺️</span>
-        <div class="feat-text">
-          <strong>Huge World</strong>
-          <p>10,000 × 10,000 block world — plenty of room to find your perfect spot.</p>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <span class="feat-emoji">🏡</span>
-        <div class="feat-text">
-          <strong>Land Claiming</strong>
-          <p>Protect your builds so only you (and who you trust) can touch them.</p>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <span class="feat-emoji">🎁</span>
-        <div class="feat-text">
-          <strong>Starter Kits</strong>
-          <p>Hit the ground running with a starter kit when you join.</p>
-        </div>
-      </div>
-
-      <div class="feature-card">
-        <span class="feat-emoji">⏱️</span>
-        <div class="feat-text">
-          <strong>Playtime Ranks</strong>
-          <p>Earn rewards just by playing. No donations needed — ever.</p>
-        </div>
-      </div>
-
+      <div class="feat"><span class="feat-icon">✅</span><div class="feat-name">Pure Survival</div><div class="feat-desc">Vanilla the way it was meant to be, with smooth quality-of-life additions.</div></div>
+      <div class="feat"><span class="feat-icon">⚔️</span><div class="feat-name">PvP Disabled</div><div class="feat-desc">Build in total peace. No griefers, no stress—ever.</div></div>
+      <div class="feat"><span class="feat-icon">💀</span><div class="feat-name">Keep Inventory</div><div class="feat-desc">Keep your hard-earned items when you die. Always safe.</div></div>
+      <div class="feat"><span class="feat-icon">🐾</span><div class="feat-name">Mob Griefing Off</div><div class="feat-desc">No random creeper craters. Your beautiful world stays yours.</div></div>
+      <div class="feat"><span class="feat-icon">💬</span><div class="feat-name">Discord Linked</div><div class="feat-desc">Minecraft chat synced to our community Discord so you never miss a beat.</div></div>
+      <div class="feat"><span class="feat-icon">🗺️</span><div class="feat-name">Huge World</div><div class="feat-desc">A massive 10,000 × 10,000 blocks to explore and find your perfect spot.</div></div>
+      <div class="feat"><span class="feat-icon">🏡</span><div class="feat-name">Land Claiming</div><div class="feat-desc">Easily protect your builds so only you and your friends can touch them.</div></div>
+      <div class="feat"><span class="feat-icon">🎁</span><div class="feat-name">Starter Kits</div><div class="feat-desc">Get a friendly boost and hit the ground running as soon as you join.</div></div>
+      <div class="feat"><span class="feat-icon">⏱️</span><div class="feat-name">Playtime Ranks</div><div class="feat-desc">Unlock cool perks and ranks naturally just by playing the game.</div></div>
     </div>
-
-    <!-- CONNECTION INFO -->
-    <div class="connect-section">
-      <h2>🔗 Join the Pond</h2>
-      <div class="connect-grid">
-
-        <div class="connect-card">
-          <div class="connect-label">☕ Java Edition</div>
-          <div class="connect-value">
-            play.froggiemc.eu
-            <button class="copy-btn" onclick="copyText(this, 'play.froggiemc.eu')">Copy</button>
-          </div>
-        </div>
-
-        <div class="connect-card">
-          <div class="connect-label">📱 Bedrock Edition</div>
-          <div class="connect-value">
-            play.froggiemc.eu
-            <button class="copy-btn" onclick="copyText(this, 'play.froggiemc.eu')">Copy</button>
-          </div>
-          <div class="connect-label" style="margin-top: 10px;">🔌 Port</div>
-          <div class="connect-value">
-            31335
-            <button class="copy-btn" onclick="copyText(this, '31335')">Copy</button>
-          </div>
-        </div>
-
-        <div class="connect-card">
-          <div class="connect-label">💬 Discord</div>
-          <div class="connect-value">
-            <a href="https://discord.gg/yRpdeJhGhR" target="_blank" style="color: inherit; text-decoration: none;">discord.gg/yRpdeJhGhR</a>
-            <button class="copy-btn" onclick="copyText(this, 'discord.gg/yRpdeJhGhR')">Copy</button>
-          </div>
-          <div class="connect-sub">Or use /discord in-game</div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- CTA -->
-    <div class="cta-wrap">
-      <a href="https://discord.gg/yRpdeJhGhR" target="_blank" class="cta-btn">
-        🐸 Join FroggieMC
-      </a>
-      <p class="cta-note">Come hang out in the pond 🌿💚</p>
-    </div>
-
-    <!-- FOOTER -->
-    <footer>
-      <span class="frog-small">🐸</span> FroggieMC — Friendly, Chill, Drama-Free Survival
-    </footer>
-
   </div>
 
-  <script>
-    // Copy to clipboard
-    function copyText(btn, text) {
-      navigator.clipboard.writeText(text).then(() => {
-        btn.textContent = 'Copied!';
-        btn.classList.add('copied');
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.classList.remove('copied');
-        }, 1800);
-      });
-    }
+  <div class="connect-section sr sr-d2">
+    <h2 class="section-label">How to connect</h2>
+    <div class="connect-cards">
 
-    // Scroll reveal for cards
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  </script>
+      <div class="connect-card">
+        <div class="connect-card-header">
+          <div class="connect-icon">☕</div>
+          <div class="connect-title">Java Edition</div>
+        </div>
+        <div class="connect-row">
+          <div class="connect-row-label">Server Address</div>
+          <div class="connect-row-value">
+            <div class="connect-val">play.froggiemc.eu</div>
+            <button class="copy-btn" onclick="copyText(this,'play.froggiemc.eu')">Copy</button>
+          </div>
+        </div>
+      </div>
 
+      <div class="connect-card">
+        <div class="connect-card-header">
+          <div class="connect-icon">📱</div>
+          <div class="connect-title">Bedrock Edition</div>
+        </div>
+        <div class="connect-row">
+          <div class="connect-row-label">Server Address</div>
+          <div class="connect-row-value">
+            <div class="connect-val">play.froggiemc.eu</div>
+            <button class="copy-btn" onclick="copyText(this,'play.froggiemc.eu')">Copy</button>
+          </div>
+        </div>
+        <div class="connect-row">
+          <div class="connect-row-label">Port</div>
+          <div class="connect-row-value">
+            <div class="connect-val">31335</div>
+            <button class="copy-btn" onclick="copyText(this,'31335')">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="connect-card">
+        <div class="connect-card-header">
+          <div class="connect-icon">💬</div>
+          <div class="connect-title">Discord</div>
+        </div>
+        <div class="connect-row">
+          <div class="connect-row-label">Invite Link</div>
+          <div class="connect-row-value">
+            <div class="connect-val"><a href="https://discord.gg/yRpdeJhGhR" target="_blank">discord.gg/yRpdeJhGhR</a></div>
+            <button class="copy-btn" onclick="copyText(this,'https://discord.gg/yRpdeJhGhR')">Copy</button>
+          </div>
+        </div>
+        <div class="connect-row">
+          <div class="connect-row-label">In-game Command</div>
+          <div class="connect-row-value">
+            <div class="connect-val" style="color:var(--text-faint); font-family: monospace;">/discord</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="sr">
+    <span><div class="footer-dot"></div> FroggieMC · Friendly Survival Community</span>
+    <span>🐸 Come hang out with us!</span>
+  </footer>
+
+</div>
+
+<script>
+  // Copy to clipboard functionality
+  function copyText(btn, text) {
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { 
+        btn.textContent = originalText; 
+        btn.classList.remove('copied'); 
+      }, 2000);
+    });
+  }
+
+  // Scroll reveal observer
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { 
+      if (e.isIntersecting) e.target.classList.add('visible'); 
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+  
+  document.querySelectorAll('.sr').forEach(el => io.observe(el));
+
+  // Subtle mouse tracking glow for feature cards
+  document.querySelectorAll('.feat').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
+</script>
 </body>
 </html>
