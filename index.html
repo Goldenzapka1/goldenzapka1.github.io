@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FroggieMC - Friendly Survival</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            background: linear-gradient(to bottom right, rgb(0, 36, 0), rgb(0, 110, 0), rgb(0, 36, 0));
+            font-family: Nunito, sans-serif;
+        }
+
+        .multicolortext {
+            background-image: linear-gradient(to left, rgb(255,255,255), rgb(0,163,155), rgb(255,255,255));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Hero section */
+        .hero {
+            text-align: center;
+            padding: 20px 16px 0;
+            color: aliceblue;
+        }
+
+        .hero-sub {
+            font-size: clamp(14px, 2vw, 22px);
+            margin: 0 0 4px;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 7vw, 96px);
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        .hero-tagline {
+            font-size: clamp(14px, 2vw, 22px);
+            margin: 0 0 24px;
+        }
+
+        /* CTA buttons */
+        .cta-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            padding: 0 16px 16px;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(to bottom right, rgb(0,255,191), rgb(0,167,158));
+            color: aliceblue;
+            width: min(350px, 90vw);
+            height: 80px;
+            border-radius: 999px;
+            border: none;
+            box-shadow: 0 4px 6px rgb(11,58,0);
+            font-size: clamp(15px, 1.3vw, 20px);
+            font-family: Nunito, sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 0 20px;
+        }
+
+        /* Section headings */
+        .section-title {
+            text-align: center;
+            font-size: clamp(36px, 7vw, 80px);
+            margin: 32px 0 8px;
+        }
+
+        /* Feature / rule grids */
+        .tile-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 0 20px 20px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            .tile-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(to bottom right, rgb(0,255,191), rgb(0,167,158));
+            color: aliceblue;
+            padding: clamp(20px, 4vw, 48px) 16px;
+            text-align: center;
+            border-radius: 999px;
+            font-family: Nunito, sans-serif;
+            font-size: clamp(15px, 1.6vw, 22px);
+            box-shadow: 0 4px 6px rgb(0,56,7);
+        }
+
+        /* Join details grid */
+        .join-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 0 20px 40px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            .join-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tilev2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(to bottom right, rgb(0,179,134), rgb(0,95,71));
+            color: aliceblue;
+            padding: 20px 16px;
+            text-align: center;
+            border-radius: 999px;
+            font-family: Nunito, sans-serif;
+            font-size: clamp(14px, 1.4vw, 20px);
+            box-shadow: 0 4px 6px rgb(0,56,7);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h2 class="hero-sub">Java and Bedrock crossplay</h2>
+        <h1 class="hero-title"><span class="multicolortext">FroggieMC</span></h1>
+        <h2 class="hero-tagline">small friendly server!</h2>
+    </div>
+
+    <div class="cta-group">
+        <a href="http://5.9.109.240:31335" target="_blank">
+            <button class="cta-btn">🗺️ Our Server Map ➔</button>
+        </a>
+        <a href="https://discord.gg/yRpdeJhGhR" target="_blank">
+            <button class="cta-btn">💬 Join Our Discord ➔</button>
+        </a>
+    </div>
+
+    <h1 class="section-title"><span class="multicolortext">Features:</span></h1>
+
+    <div class="tile-grid">
+        <div class="tile">✅ No economy</div>
+        <div class="tile">⚔️ PvP only in arena</div>
+        <div class="tile">💀 Keep inventory</div>
+        <div class="tile">🐾 Mob Griefing off</div>
+        <div class="tile">💬 Discord Linked</div>
+        <div class="tile">🗺️ Huge World</div>
+        <div class="tile">🏡 Land Claiming</div>
+        <div class="tile">🎁 Starter Kits</div>
+        <div class="tile">⏱️ Playtime Ranks</div>
+    </div>
+
+    <h1 class="section-title"><span class="multicolortext">Server Rules:</span></h1>
+
+    <div class="tile-grid">
+        <div class="tile">🤝 Be Respectful</div>
+        <div class="tile">🚫 No Griefing</div>
+        <div class="tile">💎 Don't Cheat</div>
+        <div class="tile">📮 No Spamming</div>
+        <div class="tile">🏗️ Avoid Lag Machines</div>
+        <div class="tile">🐸 Have Fun!</div>
+    </div>
+
+    <h1 class="section-title"><span class="multicolortext">Join Details:</span></h1>
+
+    <div class="join-grid">
+        <div class="tilev2">Java IP: play.froggiemc.eu</div>
+        <div class="tilev2">Bedrock IP: play.froggiemc.eu</div>
+        <div class="tilev2">Bedrock Port: 31335</div>
+    </div>
+
+</body>
+</html>
