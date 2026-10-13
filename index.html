@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CementSMP</title>
+    <link rel="icon" href="CementSMPLogo.ico" type="image/x-icon">
+    <style>
+        /* ================= DESKTOP (unchanged look) ================= */
+        html, body {
+            background-color: gray;
+            max-width: 100%;
+        }
+        .heading {
+            position: absolute;
+            left: 50%;
+            translate: -50%;
+            background-color: darkslategray;
+            min-height: 27rem;
+            width: 99%;
+            top: 0px;
+            border-radius: 0vw 0vw 3rem 3rem;
+        }
+        .image {
+            width: 10rem;
+            position: absolute;
+            left: 50%;
+            translate: -50%;
+            top: 1rem;
+        }
+        .title {
+            position: absolute;
+            left: 50%;
+            translate: -50%;
+            top: 11rem;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+            font-weight: 1000;
+            font-size: 3rem;
+        }
+        .b {
+            font-family: Arial, Helvetica, sans-serif;
+            position: absolute;
+            left: 50%;
+            translate: -50%;
+            top: 15rem;
+            color: white;
+            font-weight: 300;
+            background-color: darkslategray;
+            width: 90%;
+            text-align: center;
+            height: 5rem;
+        }
+
+        /* Wrappers don't generate a box on desktop, so nothing moves */
+        .buttons, .connect {
+            display: contents;
+        }
+
+        .btn {
+            position: absolute;
+            top: 28.5rem;
+            border: none;
+            font-size: 2rem;
+            padding: 0.5rem;
+            border-radius: 1rem;
+            background-color: darkslategray;
+            color: white;
+            transition: background-color 0.3s ease, top 0.3s ease;
+            max-width: 15rem;
+        }
+        .btn:hover {
+            background-color: rgb(28, 48, 48);
+            top: 28rem;
+        }
+        .btn-left {
+            left: 48%;
+            translate: -100%;
+        }
+        .btn-right {
+            left: 52%;
+        }
+
+        .info {
+            color: black;
+            position: absolute;
+            left: 50%;
+            translate: -50%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .ip-label   { top: 32rem; }
+        .ip-value   { top: 34rem; }
+        .port-label { top: 41rem; }
+        .port-value { top: 43rem; }
+
+        .cpybtn, .cpybtn2 {
+            position: absolute;
+            left: 50%;
+            translate: -50%;
+            font-family: Arial, Helvetica, sans-serif;
+            border-radius: 1rem;
+            border: none;
+            font-size: 2rem;
+            transition: background-color 0.3s ease, top 0.3s ease;
+            background-color: darkslategray;
+            color: white;
+        }
+        .cpybtn  { top: 38rem; }
+        .cpybtn2 { top: 47rem; }
+        .cpybtn:hover, .cpybtn2:hover {
+            background-color: rgb(28, 48, 48);
+        }
+        .cpybtn:hover  { top: 37.5rem; }
+        .cpybtn2:hover { top: 46.5rem; }
+
+        .box {
+            border: solid black 0.2rem;
+            position: absolute;
+            left: 50%;
+            translate: -50%;
+            padding: 0.5rem;
+            background-color: lightgray;
+            border-radius: 1rem;
+            text-align: center;
+            width: 70%;
+        }
+        #commands { top: 50rem; }
+        #rules    { top: 90rem; }
+
+        .box-title {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 2rem;
+            color: black;
+        }
+        .box-item {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.5rem;
+            color: black;
+        }
+
+        .footer {
+            position: absolute;
+            top: 118rem;
+            font-family: Arial, Helvetica, sans-serif;
+            left: 50%;
+            translate: -50%;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* ================= MOBILE / NARROW SCREENS =================
+           Everything switches from absolute positioning to a normal
+           top-to-bottom flow, so nothing can overlap.                */
+        @media (max-width: 800px) {
+            body {
+                margin: 0;
+                padding-bottom: 2rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* header */
+            .heading {
+                position: relative;
+                left: auto;
+                top: auto;
+                translate: none;
+                width: 99%;
+                min-height: 0;
+                box-sizing: border-box;
+                padding: 1rem 1rem 2rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .image {
+                position: static;
+                translate: none;
+                width: 8rem;
+            }
+            .title {
+                position: static;
+                translate: none;
+                margin: 1rem 0 0.75rem;
+                font-size: 2.5rem;
+            }
+            .b {
+                position: static;
+                translate: none;
+                width: auto;
+                max-width: 40rem;
+                height: auto;
+                margin: 0;
+                font-size: 1.15rem;
+                line-height: 1.4;
+            }
+
+            /* discord / map buttons */
+            .buttons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                width: 100%;
+                margin-top: 1.5rem;
+            }
+            .buttons a {
+                display: block;
+                width: min(90%, 18rem);
+            }
+            .btn {
+                position: static;
+                translate: none;
+                width: 100%;
+                max-width: none;
+                font-size: 1.5rem;
+            }
+
+            /* IP + bedrock port */
+            .connect {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                box-sizing: border-box;
+                padding: 0 1rem;
+                margin-top: 1.5rem;
+                text-align: center;
+            }
+            .info {
+                position: static;
+                translate: none;
+                margin: 0.25rem 0;
+                font-size: 1.6rem;
+                overflow-wrap: anywhere;
+            }
+            .port-label {
+                margin-top: 2rem;
+            }
+            .cpybtn, .cpybtn2 {
+                position: static;
+                translate: none;
+                margin-top: 0.75rem;
+                padding: 0.3rem 1.25rem;
+                font-size: 1.5rem;
+            }
+
+            /* commands + rules boxes */
+            .box {
+                position: static;
+                translate: none;
+                box-sizing: border-box;
+                align-self: center;
+                width: calc(100% - 2rem);
+                max-width: 40rem;
+                margin: 2rem 0 0;
+                overflow-wrap: anywhere;
+            }
+            .box-title { font-size: 1.5rem; }
+            .box-item  { font-size: 1.1rem; }
+
+            /* footer */
+            .footer {
+                position: static;
+                translate: none;
+                width: calc(100% - 2rem);
+                margin: 2rem 0 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heading">
+        <img class="image" src="CementSMPLogo.png" alt="CementSMP logo">
+        <h1 class="title">CementSMP</h1>
+        <h2 class="b">a friendly semi-vanilla world for people who just want to build, explore, meet new people and occasionally pvp. No economy, just a world worth taking care of</h2>
+    </div>
+
+    <div class="buttons">
+        <a href="https://discord.gg/9D7kZygyWh" target="_blank"><button class="btn btn-left">Join our discord</button></a>
+        <a href="https://map.cementsmp.eu" target="_blank"><button class="btn btn-right">Check out our map</button></a>
+    </div>
+
+    <div class="connect">
+        <h1 class="info ip-label">IP:</h1>
+        <h1 class="info ip-value">play.cementsmp.eu</h1>
+        <a><button class="cpybtn" onclick="navigator.clipboard.writeText('play.cementsmp.eu'); alert('IP Copied!')">copy</button></a>
+        <h1 class="info port-label">Bedrock Port:</h1>
+        <h1 class="info port-value">27109</h1>
+        <a><button class="cpybtn2" onclick="navigator.clipboard.writeText('27109'); alert('Port Copied!')">copy</button></a>
+    </div>
+
+    <div class="box" id="commands">
+        <h1 class="box-title">Main Commands:</h1>
+        <h1 class="box-title">-------------------------------</h1>
+        <h2 class="box-item">• /pvp - toggles your pvp</h2>
+        <h2 class="box-item">• /tpa - request teleport to another player</h2>
+        <h2 class="box-item">• /sethome - set a home</h2>
+        <h2 class="box-item">• /home - teleport to a home</h2>
+        <h2 class="box-item">• /spawn - teleport to spawn</h2>
+        <h2 class="box-item">• /playtime - check your playtime</h2>
+        <h2 class="box-item">• /ranks - shows the playtime rank progression</h2>
+    </div>
+
+    <div class="box" id="rules">
+        <h1 class="box-title">Rules:</h1>
+        <h1 class="box-title">-------------------------------</h1>
+        <h2 class="box-item">• No Griefing other players' builds</h2>
+        <h2 class="box-item">• No hacked clients, exploits, modpacks or glitches</h2>
+        <h2 class="box-item">• Don't discriminate others</h2>
+        <h2 class="box-item">• Use common sense</h2>
+        <h2 class="box-item">• Follow staff instructions</h2>
+    </div>
+
+    <h5 class="footer">CementSMP is not affiliated with Mojang Studios or Microsoft</h5>
+</body>
+</html>
