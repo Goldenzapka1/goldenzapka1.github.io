@@ -109,73 +109,40 @@
             color: black;
         }
 
-        /* Mobile-only responsive fixes (keeps desktop completely untouched) */
+        /* Mobile-only fixes for the overlapping bottom sections */
         @media screen and (max-width: 768px) {
             html, body {
                 overflow-x: hidden;
             }
+            /* Push content down below the top desktop section so it doesn't overlap */
             body {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                padding: 1rem;
+                padding-top: 35rem; 
+                padding-left: 1rem;
+                padding-right: 1rem;
+                padding-bottom: 2rem;
                 box-sizing: border-box;
             }
-            .heading, .image, .extbck, .b, .btn, .cpybtn, .cpybtn2, 
-            body > h1, body > div, body > h5 {
+            /* Only reset positioning for elements below the buttons */
+            .cpybtn, .cpybtn2, 
+            body > h1:not(.heading h1), body > div:not(.heading), body > h5 {
                 position: static !important;
                 translate: none !important;
                 left: auto !important;
                 top: auto !important;
-                margin: 0.5rem 0 !important;
-            }
-            .heading {
-                width: 100% !important;
-                min-init: auto !important;
-                min-height: auto !important;
-                padding: 2rem 1rem;
-                border-radius: 1.5rem;
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            .image {
-                width: 8rem;
-                margin-bottom: 1rem !important;
-            }
-            .heading h1 {
-                position: static !important;
-                translate: none !important;
-                font-size: 2.5rem !important;
-                margin: 0 !important;
-            }
-            .extbck {
-                width: 100% !important;
-                background-color: transparent !important;
-            }
-            .b {
-                width: 100% !important;
-                height: auto !important;
-                font-size: 1rem;
-                padding: 0 1rem;
-                box-sizing: border-box;
-            }
-            .btn {
-                width: 80%;
-                max-width: none;
-                font-size: 1.25rem;
-                text-align: center;
-            }
-            body > h1 {
-                font-size: 1.5rem;
-                text-align: center;
+                margin: 0.75rem 0 !important;
             }
             .cpybtn, .cpybtn2 {
                 font-size: 1.25rem;
                 padding: 0.5rem 1rem;
             }
-            body > div {
+            body > h1:not(.heading h1) {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            body > div:not(.heading) {
                 width: 90% !important;
                 box-sizing: border-box;
             }
@@ -186,6 +153,7 @@
                 font-size: 0.8rem;
                 padding: 0 1rem;
                 box-sizing: border-box;
+                text-align: center;
             }
         }
     </style>
