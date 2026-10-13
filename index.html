@@ -9,20 +9,24 @@
         html, body {
             background-color: gray;
             max-width: 100%;
+            margin: 0;
+            padding: 0;
         }
+
+        /* Default styles kept for desktop/PCs where it looks fine */
         .image {
             width: 10rem;
             position: absolute;
             left: 50%;
             translate: -50%;
-            top: 1rem
+            top: 1rem;
         }
         .heading {
             position: absolute;
             left: 50%;
             translate:-50%;
             background-color: darkslategray;
-            min-height: 26rem;
+            min-height: 27rem;
             width: 99%;
             top: 0px;
             border-radius: 0vw 0vw 3rem 3rem;
@@ -32,16 +36,16 @@
             position: absolute;
             left: 50%;
             translate: -50%;
-            top: 13rem;
+            top: 12.5rem;
             color: white;
             font-weight: 300;
             background-color: darkslategray;
             width: 90%;
             text-align: center;
-            height: 5rem
+            height: 5rem;
         }
         .btn {
-            position:absolute;
+            position: absolute;
             top: 27rem;
             border: none;
             font-size: 2rem;
@@ -50,24 +54,24 @@
             background-color: darkslategray;
             color: white;
             transition: background-color 0.3s ease, top 0.3s ease;
-            max-width: 15rem
+            max-width: 15rem;
+            cursor: pointer;
         }
         .btn:hover {
             background-color: rgb(28, 48, 48);
-            top: 26.5rem
+            top: 26.5rem;
         }
         .extbck {
             width: 100%;
             background-color: darkslategray;
-            position:relative;
+            position: relative;
             left: 50%;
             translate: -50%;
             top: 2rem;
         }
-        .cpybtn {
-            color: black; 
+        .cpybtn, .cpybtn2 {
+            color: white; 
             position: absolute; 
-            top: 38rem; 
             left: 50%; 
             translate: -50%; 
             font-family: Arial, Helvetica, sans-serif; 
@@ -76,34 +80,92 @@
             font-size: 2rem;
             transition: background-color 0.3s ease, top 0.3s ease;
             background-color: darkslategray;
-            color: white
+            cursor: pointer;
         }
-        .cpybtn:hover {
-            background-color:rgb(28, 48, 48);
-            top: 37.5rem;
-        }
-        .cpybtn2 {
-            color: black; 
-            position: absolute; 
-            top: 47rem; 
-            left: 50%; 
-            translate: -50%; 
-            font-family: Arial, Helvetica, sans-serif; 
-            border-radius: 1rem; 
-            border: none; 
-            font-size: 2rem;
-            transition: background-color 0.3s ease, top 0.3s ease;
-            background-color: darkslategray;
-            color: white
-        }
-        .cpybtn2:hover {
-            background-color:rgb(28, 48, 48);
-            top: 46.5rem;
-        }
+        .cpybtn { top: 38rem; }
+        .cpybtn:hover { background-color: rgb(28, 48, 48); top: 37.5rem; }
+        .cpybtn2 { top: 47rem; }
+        .cpybtn2:hover { background-color: rgb(28, 48, 48); top: 46.5rem; }
         .commands {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 2rem;
             color: black;
+        }
+
+        /* Responsive override for Mobile and TVs using Media Queries */
+        @media screen and (max-width: 768px), screen and (min-width: 1921px) {
+            body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                box-sizing: border-box;
+            }
+            .heading, .image, .extbck, .b, .btn, .cpybtn, .cpybtn2, 
+            body > h1, body > div, body > h5 {
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                margin: 0.5rem 0 !important;
+            }
+            .heading {
+                width: 100% !important;
+                min-height: auto !important;
+                padding: 2rem 1rem;
+                border-radius: 1.5rem;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .image {
+                width: 8rem;
+                margin-bottom: 1rem !important;
+            }
+            .heading h1 {
+                position: static !important;
+                translate: none !important;
+                font-size: 2.5rem !important;
+                margin: 0 !important;
+            }
+            .extbck {
+                width: 100% !important;
+                background-color: transparent !important;
+            }
+            .b {
+                width: 100% !important;
+                height: auto !important;
+                font-size: 1rem;
+                padding: 0 1rem;
+                box-sizing: border-box;
+            }
+            .btn {
+                width: 80%;
+                max-width: none;
+                font-size: 1.25rem;
+                text-align: center;
+            }
+            body > h1 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            .cpybtn, .cpybtn2 {
+                font-size: 1.25rem;
+                padding: 0.5rem 1rem;
+            }
+            body > div {
+                width: 90% !important;
+                box-sizing: border-box;
+            }
+            .commands {
+                font-size: 1.25rem !important;
+            }
+            body > h5 {
+                font-size: 0.8rem;
+                padding: 0 1rem;
+                box-sizing: border-box;
+            }
         }
     </style>
 </head>
