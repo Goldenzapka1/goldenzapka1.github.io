@@ -109,42 +109,88 @@
             color: black;
         }
 
-        /* Mobile-only fixes for the overlapping bottom sections */
+        /* Mobile-only responsive fixes for top and bottom sections */
         @media screen and (max-width: 768px) {
             html, body {
                 overflow-x: hidden;
             }
-            /* Push content down below the top desktop section so it doesn't overlap */
             body {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                padding-top: 35rem; 
-                padding-left: 1rem;
-                padding-right: 1rem;
-                padding-bottom: 2rem;
+                padding: 1rem;
                 box-sizing: border-box;
             }
-            /* Only reset positioning for elements below the buttons */
-            .cpybtn, .cpybtn2, 
-            body > h1:not(.heading h1), body > div:not(.heading), body > h5 {
+            /* Reset absolute positioning for all elements on mobile */
+            .heading, .image, .extbck, .b, .btn, .cpybtn, .cpybtn2, 
+            body > h1, body > div, body > h5, .heading h1 {
                 position: static !important;
                 translate: none !important;
                 left: auto !important;
                 top: auto !important;
-                margin: 0.75rem 0 !important;
+                margin: 0.5rem 0 !important;
+            }
+            .heading {
+                width: 100% !important;
+                min-height: auto !important;
+                padding: 2rem 1rem;
+                border-radius: 1.5rem;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                box-sizing: border-box;
+            }
+            .image {
+                width: 7rem;
+                margin-bottom: 0.5rem !important;
+            }
+            .heading h1 {
+                font-size: 2.2rem !important;
+                margin: 0.5rem 0 !important;
+            }
+            .extbck {
+                width: 100% !important;
+                background-color: transparent !important;
+            }
+            .b {
+                width: 100% !important;
+                height: auto !important;
+                font-size: 0.95rem;
+                padding: 0 0.5rem;
+                box-sizing: border-box;
+                background-color: transparent !important;
+            }
+            body > a {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                margin: 0.3rem 0;
+            }
+            .btn {
+                width: 85%;
+                max-width: none;
+                font-size: 1.25rem;
+                text-align: center;
+                position: static !important;
+            }
+            body > h1 {
+                font-size: 1.5rem;
+                text-align: center;
+                margin-top: 1.5rem !important;
             }
             .cpybtn, .cpybtn2 {
                 font-size: 1.25rem;
                 padding: 0.5rem 1rem;
+                position: static !important;
+                margin: 0.5rem auto !important;
+                display: block;
             }
-            body > h1:not(.heading h1) {
-                font-size: 1.5rem;
-                text-align: center;
-            }
-            body > div:not(.heading) {
+            body > div {
                 width: 90% !important;
                 box-sizing: border-box;
+                position: static !important;
+                margin: 1rem auto !important;
             }
             .commands {
                 font-size: 1.25rem !important;
@@ -154,6 +200,7 @@
                 padding: 0 1rem;
                 box-sizing: border-box;
                 text-align: center;
+                margin-top: 2rem !important;
             }
         }
     </style>
