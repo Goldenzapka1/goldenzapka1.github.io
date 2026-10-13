@@ -15,7 +15,7 @@
             position: absolute;
             left: 50%;
             translate: -50%;
-            top: 1rem
+            top: 1rem;
         }
         .heading {
             position: absolute;
@@ -38,10 +38,10 @@
             background-color: darkslategray;
             width: 90%;
             text-align: center;
-            height: 5rem
+            height: 5rem;
         }
         .btn {
-            position:absolute;
+            position: absolute;
             top: 27rem;
             border: none;
             font-size: 2rem;
@@ -55,18 +55,18 @@
         }
         .btn:hover {
             background-color: rgb(28, 48, 48);
-            top: 26.5rem
+            top: 26.5rem;
         }
         .extbck {
             width: 100%;
             background-color: darkslategray;
-            position:relative;
+            position: relative;
             left: 50%;
             translate: -50%;
             top: 2rem;
         }
         .cpybtn {
-            color: black; 
+            color: white; 
             position: absolute; 
             top: 38rem; 
             left: 50%; 
@@ -77,15 +77,14 @@
             font-size: 2rem;
             transition: background-color 0.3s ease, top 0.3s ease;
             background-color: darkslategray;
-            color: white;
             cursor: pointer;
         }
         .cpybtn:hover {
-            background-color:rgb(28, 48, 48);
+            background-color: rgb(28, 48, 48);
             top: 37.5rem;
         }
         .cpybtn2 {
-            color: black; 
+            color: white; 
             position: absolute; 
             top: 47rem; 
             left: 50%; 
@@ -96,11 +95,10 @@
             font-size: 2rem;
             transition: background-color 0.3s ease, top 0.3s ease;
             background-color: darkslategray;
-            color: white;
             cursor: pointer;
         }
         .cpybtn2:hover {
-            background-color:rgb(28, 48, 48);
+            background-color: rgb(28, 48, 48);
             top: 46.5rem;
         }
         .commands {
@@ -109,10 +107,13 @@
             color: black;
         }
 
-        /* Mobile-only responsive fixes for top and bottom sections */
-        @media screen and (max-width: 768px) {
+        /* Mobile & Tablet Responsive Fixes (Screens 1024px and below) */
+        @media screen and (max-width: 1024px) {
             html, body {
                 overflow-x: hidden;
+                width: 100%;
+                margin: 0;
+                padding: 0;
             }
             body {
                 display: flex;
@@ -120,101 +121,241 @@
                 align-items: center;
                 padding: 1rem;
                 box-sizing: border-box;
+                background-color: gray;
             }
-            /* Reset absolute positioning for all elements on mobile */
-            .heading, .image, .extbck, .b, .btn, .cpybtn, .cpybtn2, 
-            body > h1, body > div, body > h5, .heading h1 {
+
+            /* Top Section: Heading background card containing logo, title, description, and buttons */
+            .heading {
+                position: relative !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                width: 100% !important;
+                min-height: auto !important;
+                background-color: darkslategray !important;
+                border-radius: 1.5rem !important;
+                padding: 1.5rem 1rem !important;
+                text-align: center !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                box-sizing: border-box !important;
+                margin-bottom: 1.5rem !important;
+            }
+            .heading .image {
                 position: static !important;
                 translate: none !important;
                 left: auto !important;
                 top: auto !important;
-                margin: 0.5rem 0 !important;
-            }
-            .heading {
-                width: 100% !important;
-                min-height: auto !important;
-                padding: 2rem 1rem;
-                border-radius: 1.5rem;
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                box-sizing: border-box;
-            }
-            .image {
-                width: 7rem;
-                margin-bottom: 0.5rem !important;
+                width: 7rem !important;
+                margin: 0 0 0.5rem 0 !important;
             }
             .heading h1 {
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
                 font-size: 2.2rem !important;
-                margin: 0.5rem 0 !important;
+                margin: 0 0 1rem 0 !important;
+                color: white !important;
             }
             .extbck {
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
                 width: 100% !important;
                 background-color: transparent !important;
+                margin: 0 !important;
             }
             .b {
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
                 width: 100% !important;
                 height: auto !important;
-                font-size: 0.95rem;
-                padding: 0 0.5rem;
-                box-sizing: border-box;
+                font-size: 0.95rem !important;
+                color: white !important;
                 background-color: transparent !important;
+                text-align: center !important;
+                padding: 0 !important;
+                box-sizing: border-box !important;
+                margin: 0 0 1.2rem 0 !important;
             }
-            body > a {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                margin: 0.3rem 0;
+            .heading-buttons {
+                display: flex !important;
+                gap: 0.5rem !important;
+                width: 100% !important;
+                justify-content: center !important;
+                flex-wrap: wrap !important;
+            }
+            body > div > .heading-buttons > a {
+                width: 48% !important;
+                min-width: 130px !important;
+                display: inline-block !important;
+                margin: 0 !important;
+                text-align: center !important;
             }
             .btn {
-                width: 85%;
-                max-width: none;
-                font-size: 1.25rem;
-                text-align: center;
                 position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                width: 100% !important;
+                max-width: none !important;
+                font-size: 0.95rem !important;
+                padding: 0.6rem 0.2rem !important;
+                border-radius: 0.8rem !important;
+                background-color: rgb(28, 48, 48) !important;
+                color: white !important;
+                box-sizing: border-box !important;
             }
-            body > h1 {
-                font-size: 1.5rem;
-                text-align: center;
-                margin-top: 1.5rem !important;
-            }
-            .cpybtn, .cpybtn2 {
-                font-size: 1.25rem;
-                padding: 0.5rem 1rem;
+
+            /* IP & Port Section */
+            body > h1:nth-of-type(2) {
                 position: static !important;
-                margin: 0.5rem auto !important;
-                display: block;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                font-size: 1.2rem !important;
+                margin: 0.5rem 0 0.2rem 0 !important;
+                color: black !important;
+                text-align: center !important;
             }
-            body > div {
+            body > h1:nth-of-type(3) {
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                font-size: 1.3rem !important;
+                margin: 0.2rem 0 0.5rem 0 !important;
+                color: black !important;
+                text-align: center !important;
+                word-break: break-all;
+            }
+            body > a:nth-of-type(1) {
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                display: flex !important;
+                justify-content: center !important;
+                width: 100% !important;
+                margin: 0.3rem 0 !important;
+            }
+            .cpybtn {
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                font-size: 1.1rem !important;
+                padding: 0.4rem 1.5rem !important;
+                border-radius: 0.8rem !important;
+                background-color: darkslategray !important;
+                color: white !important;
+            }
+            body > h1:nth-of-type(4) {
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                font-size: 1.2rem !important;
+                margin: 1rem 0 0.2rem 0 !important;
+                color: black !important;
+                text-align: center !important;
+            }
+            body > h1:nth-of-type(5) {
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                font-size: 1.3rem !important;
+                margin: 0.2rem 0 0.5rem 0 !important;
+                color: black !important;
+                text-align: center !important;
+            }
+            body > a:nth-of-type(2) {
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                display: flex !important;
+                justify-content: center !important;
+                width: 100% !important;
+                margin: 0.3rem 0 !important;
+            }
+            .cpybtn2 {
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                font-size: 1.1rem !important;
+                padding: 0.4rem 1.5rem !important;
+                border-radius: 0.8rem !important;
+                background-color: darkslategray !important;
+                color: white !important;
+            }
+
+            /* Commands and Rules boxes */
+            body > div:nth-of-type(2) {
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
                 width: 90% !important;
-                box-sizing: border-box;
+                box-sizing: border-box !important;
+                margin: 1.5rem auto 1.2rem auto !important;
+                padding: 1rem !important;
+                background-color: lightgray !important;
+                border-radius: 1rem !important;
+                border: solid black 0.2rem !important;
+                text-align: center !important;
+            }
+            body > div:nth-of-type(3) {
                 position: static !important;
-                margin: 1rem auto !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                width: 90% !important;
+                box-sizing: border-box !important;
+                margin: 0.5rem auto !important;
+                padding: 1rem !important;
+                background-color: lightgray !important;
+                border-radius: 1rem !important;
+                border: solid black 0.2rem !important;
+                text-align: center !important;
             }
             .commands {
-                font-size: 1.25rem !important;
+                font-size: 1.1rem !important;
             }
             body > h5 {
-                font-size: 0.8rem;
-                padding: 0 1rem;
-                box-sizing: border-box;
-                text-align: center;
-                margin-top: 2rem !important;
+                position: static !important;
+                translate: none !important;
+                left: auto !important;
+                top: auto !important;
+                font-size: 0.75rem !important;
+                text-align: center !important;
+                width: 100% !important;
+                margin: 1.5rem 0 1rem 0 !important;
+                padding: 0 1rem !important;
+                box-sizing: border-box !important;
             }
         }
     </style>
 </head>
 <body>
     <div class="heading">
+        <img class="image" src="CementSMPLogo.png">
         <h1 style="position: absolute; left: 50%; translate:-50%; top:11rem; font-family: Arial, Helvetica, sans-serif; color: white; font-weight: 1000; font-size: 3rem">CementSMP</h1>
+        <div class="extbck">
+            <h2 class="b">a friendly semi-vanilla world for people who just want to build, explore, meet new people and occasionally pvp. No economy, just a world worth taking care of</h2>
+        </div>
+        <div class="heading-buttons">
+            <a href="https://discord.gg/9D7kZygyWh" target="_blank"><button class="btn">Join our discord</button></a>
+            <a href="https://map.cementsmp.eu" target="_blank"><button class="btn">Check out our map</button></a>
+        </div>
     </div>
-    <img class="image" src="CementSMPLogo.png">
-    <div class="extbck">
-        <h2 class="b">a friendly semi-vanilla world for people who just want to build, explore, meet new people and occasionally pvp. No economy, just a world worth taking care of</h2>
-    </div>
-    <a href="https://discord.gg/9D7kZygyWh" target="_blank"><button class="btn" style="left:48%; translate: -100%">Join our discord</button></a>
-    <a href="https://map.cementsmp.eu" target="_blank"><button class="btn" style="left: 52%">Check out our map</button></a>
     <h1 style="color: black; position: absolute; top: 32rem; left: 50%; translate: -50%; font-family: Arial, Helvetica, sans-serif;">IP:</h1>
     <h1 style="color: black; position: absolute; top: 34rem; left: 50%; translate: -50%; font-family: Arial, Helvetica, sans-serif">play.cementsmp.eu</h1>
     <a><button class="cpybtn" onclick="navigator.clipboard.writeText('play.cementsmp.eu'); alert('IP Copied!')">copy</button></a>
